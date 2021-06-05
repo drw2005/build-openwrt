@@ -9,19 +9,6 @@ LIZZZ="package/default-settings/files/zzz-default-settings"
 IMZZZ="package/emortal/default-settings/files/zzz-default-settings"
 }
 
-# 全脚本源码通用diy.sh文件
-Diy_all() {
-DIY_GET_COMMON_SH
-echo -e "\nsrc-git danshui https://github.com/281677160/openwrt-package.git;$REPO_BRANCH" >> feeds.conf.default
-mv "${PATH1}"/AutoBuild_Tools.sh package/base-files/files/bin
-chmod +x package/base-files/files/bin/AutoBuild_Tools.sh
-if [[ ${REGULAR_UPDATE} == "true" ]]; then
-	git clone https://github.com/281677160/luci-app-autoupdate package/luci-app-autoupdate
-	mv "${PATH1}"/AutoUpdate.sh package/base-files/files/bin
-	chmod +x package/base-files/files/bin/AutoUpdate.sh
-fi
-}
-
 # 全脚本源码通用diy2.sh文件
 Diy_all2() {
 DIY_GET_COMMON_SH
@@ -43,9 +30,6 @@ if [[ "${Modelfile}" == "Lede_x86_64" ]]; then
 sed -i '/IMAGES_GZIP/d' "${PATH1}/${CONFIG_FILE}" > /dev/null 2>&1
 echo -e "\nCONFIG_TARGET_IMAGES_GZIP=y" >> "${PATH1}/${CONFIG_FILE}"
 fi
-git clone https://github.com/fw876/helloworld package/luci-app-ssr-plus
-git clone https://github.com/xiaorouji/openwrt-passwall package/luci-app-passwall
-git clone https://github.com/jerrykuku/luci-app-vssr package/luci-app-vssr
 git clone https://github.com/vernesong/OpenClash package/luci-app-openclash
 git clone https://github.com/frainzy1477/luci-app-clash package/luci-app-clash
 }
@@ -55,8 +39,6 @@ Diy_lede2() {
 DIY_GET_COMMON_SH
 cp -Rf "${Home}"/build/common/LEDE/files "${Home}"
 cp -Rf "${Home}"/build/common/LEDE/diy/* "${Home}"
-mv -f feeds/danshui/luci-app-oscam feeds/luci/applications
-mv -f feeds/danshui/oscam feeds/packages/net
 sed -i "/exit 0/i\chmod +x /etc/webweb.sh && source /etc/webweb.sh > /dev/null 2>&1" package/base-files/files/etc/rc.local
 }
 
@@ -67,9 +49,6 @@ sed -i "/exit 0/i\chmod +x /etc/webweb.sh && source /etc/webweb.sh > /dev/null 2
 Diy_lienol() {
 DIY_GET_COMMON_SH
 rm -rf package/lean/luci-app-netdata
-
-git clone https://github.com/fw876/helloworld package/luci-app-ssr-plus
-git clone https://github.com/xiaorouji/openwrt-passwall package/luci-app-passwall
 git clone https://github.com/jerrykuku/luci-app-vssr package/luci-app-vssr
 git clone https://github.com/vernesong/OpenClash package/luci-app-openclash
 git clone https://github.com/frainzy1477/luci-app-clash package/luci-app-clash
@@ -86,8 +65,6 @@ rm -rf feeds/packages/libs/libcap
 svn co https://github.com/coolsnowwolf/packages/trunk/libs/libcap feeds/packages/libs/libcap
 sed -i 's/DEFAULT_PACKAGES +=/DEFAULT_PACKAGES += luci-app-passwall/g' target/linux/x86/Makefile
 sed -i "/exit 0/i\chmod +x /etc/webweb.sh && source /etc/webweb.sh > /dev/null 2>&1" package/base-files/files/etc/rc.local
-curl -fsSL https://raw.githubusercontent.com/281677160/AdGuardHome/main/luci-app-adguardhome/root/etc/config/AdGuardHome.yaml > package/diy/luci-app-adguardhome/root/etc/config/AdGuardHome.yaml
-curl -fsSL https://raw.githubusercontent.com/281677160/AdGuardHome/main/luci-app-adguardhome/po/zh-cn/AdGuardHome.po > package/diy/luci-app-adguardhome/po/zh-cn/AdGuardHome.po
 }
 
 
